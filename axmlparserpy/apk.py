@@ -18,10 +18,11 @@
 
 import bytecode
 
-from axmlprinter import AXMLPrinter
-from bytecode import SV
+from axmlparserpy.axmlprinter import AXMLPrinter
+from axmlparserpy.bytecode import SV
 
-import zipfile, StringIO
+import zipfile
+from io import BytesIO
 from struct import pack, unpack
 from xml.dom import minidom
 
@@ -61,7 +62,7 @@ class APK:
         if ZIPMODULE == 0:
             self.zip = ChilkatZip(self.__raw)
         else:
-            self.zip = zipfile.ZipFile(StringIO.StringIO(self.__raw))
+            self.zip = zipfile.ZipFile(BytesIO(self.__raw))
 
         # CHECK if there is only one embedded file
         #self._reload_apk()
@@ -247,12 +248,12 @@ class APK:
         return self.get_elements("provider", "android:name")
     providers = property(get_providers)
 
-    def get_permissions(self):
-        """
-            Return permissions
-        """
-        return self.permissions
-    permissions = property(get_permissions)
+    # def get_permissions(self):
+    #     """
+    #         Return permissions
+    #     """
+    #     return self.permissions
+    # permissions = property(get_permissions)
 
     def get_min_sdk_version(self):
         """
